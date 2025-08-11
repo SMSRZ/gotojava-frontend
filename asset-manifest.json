@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/gotojava-frontend/static/css/main.4439e634.css",
+    "main.js": "/gotojava-frontend/static/js/main.6fa3d8d3.js",
+    "index.html": "/gotojava-frontend/index.html",
+    "main.4439e634.css.map": "/gotojava-frontend/static/css/main.4439e634.css.map",
+    "main.6fa3d8d3.js.map": "/gotojava-frontend/static/js/main.6fa3d8d3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4439e634.css",
+    "static/js/main.6fa3d8d3.js"
+  ]
+}
