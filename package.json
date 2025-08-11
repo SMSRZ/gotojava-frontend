@@ -2,6 +2,7 @@
   "name": "goyojava-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://smsrz.github.io/gotojava-frontend",
   "dependencies": {
     "axios": "^1.7.9",
     "framer-motion": "^12.19.1",
@@ -13,7 +14,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
