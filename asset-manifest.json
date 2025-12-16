@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/gotojava-frontend/static/css/main.4439e634.css",
-    "main.js": "/gotojava-frontend/static/js/main.71af54c1.js",
+    "main.js": "/gotojava-frontend/static/js/main.0e756baf.js",
     "index.html": "/gotojava-frontend/index.html",
     "main.4439e634.css.map": "/gotojava-frontend/static/css/main.4439e634.css.map",
-    "main.71af54c1.js.map": "/gotojava-frontend/static/js/main.71af54c1.js.map"
+    "main.0e756baf.js.map": "/gotojava-frontend/static/js/main.0e756baf.js.map"
   },
   "entrypoints": [
     "static/css/main.4439e634.css",
-    "static/js/main.71af54c1.js"
+    "static/js/main.0e756baf.js"
   ]
 }
