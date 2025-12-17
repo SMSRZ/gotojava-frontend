@@ -4,7 +4,7 @@ import { BookOpen, RefreshCw, AlertCircle, ChevronRight } from 'lucide-react';
 import axios from 'axios';
 import './TopicList.css';
 
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const TopicList = ({ onTopicSelect }) => {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,12 +14,13 @@ const TopicList = ({ onTopicSelect }) => {
   useEffect(() => {
     fetchTopics();
   }, []);
-
+  
   const fetchTopics = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('https://gotojava-backend-production.up.railway.app/getAllTopics');
+      const response = await axios.get(`${API_BASE_URL}/getAllTopics`);
+      console.log(response.data);
       setTopics(response.data);
     } catch (err) {
       setError('Failed to fetch topics. Please check if the backend server is running.');

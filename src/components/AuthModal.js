@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import authService from '../services/authService';
+
 import './AuthModal.css';
 
 const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './AIHelper.css';
 import axios from 'axios';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const AIHelper = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -44,7 +44,7 @@ const AIHelper = () => {
     setInput('');
     setLoading(true);
     try {
-      const res = await axios.get('https://gotojava-backend-production.up.railway.app/getReply', {
+      const res = await axios.get(`${API_BASE_URL}/getReply`, {
         params: { question: userMessage.text }
       });
       const data = res.data;

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, AlertCircle, HelpCircle, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
 import './QuestionList.css';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const QuestionList = ({ selectedTopic, onBackToTopics }) => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ const QuestionList = ({ selectedTopic, onBackToTopics }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(`https://gotojava-backend-production.up.railway.app/getAllQuestions/${topicID}`);
+      const response = await axios.get(`${API_BASE_URL}/getAllQuestions/${topicID}`);
       setQuestions(response.data.questionAnswer || []);
     } catch (err) {
       setError('Failed to fetch questions. Please check if the backend server is running.');

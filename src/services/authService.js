@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 class AuthService {
   constructor() {
     this.setupInterceptors();
@@ -34,11 +35,11 @@ class AuthService {
   }
 
   login(email, password) {
-    return axios.post('https://gotojava-backend-production.up.railway.app/auth/login', { email, password });
+    return axios.post(`${API_BASE_URL}/auth/login`, { email, password });
   }
 
   register(email, password,fullName) {
-    return axios.post('https://gotojava-backend-production.up.railway.app/auth/signup', { email, password, fullName});
+    return axios.post(`${API_BASE_URL}/auth/signup`, { email, password, fullName});
   }
 
   logout() {
