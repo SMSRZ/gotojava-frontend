@@ -2,37 +2,49 @@ name: Frontend CI/CD
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_REGION: ap-south-1
+      S3_BUCKET_NAME: gotojava-frontend
+      BUILD_DIR: build
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
+          cache: npm
 
-      - name: Install & Build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3
         run: |
-          npm install
-          npm run build
+          aws s3 sync $BUILD_DIR s3://$S3_BUCKET_NAME \
+            --delete \
+            --exact-timestamps
 
-      - name: Upload to S3
-        run: |
-          aws s3 sync build s3://gotojava-frontend --delete
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-south-1
-
-      - name: Invalidate CloudFront Cache
+      - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id YOUR_DISTRIBUTION_ID \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
