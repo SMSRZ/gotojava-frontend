@@ -139,7 +139,7 @@ const [isAuthOpen, setIsAuthOpen] = useState(false);
       >
         <p>&copy; 2024 Java Interview Prep. Built with React & Framer Motion.</p>
         <div className="footer-contact">
-          <p className="creator-name">Created by Mohd Safi Raza</p>
+          <p className="creator-name">Created by Syed Mohd Safi Raza Zaidi</p>
           <div className="contact-links">
             <a href="https://linkedin.com/in/safi-raza-795427253" className="contact-link linkedin" target="_blank" rel="noopener noreferrer">
               <span className="icon">💼</span>
