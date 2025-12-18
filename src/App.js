@@ -137,9 +137,9 @@ const [isAuthOpen, setIsAuthOpen] = useState(false);
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
       >
-        <p>&copy; 2024 Java Interview Prep. Built with React & Framer Motion.</p>
+        <p>&copy; Built with React</p>
         <div className="footer-contact">
-          <p className="creator-name">Created by Syed Mohd Safi Raza Zaidi</p>
+          <p className="creator-name">Created by Mohd Safi Raza</p>
           <div className="contact-links">
             <a href="https://linkedin.com/in/safi-raza-795427253" className="contact-link linkedin" target="_blank" rel="noopener noreferrer">
               <span className="icon">💼</span>
