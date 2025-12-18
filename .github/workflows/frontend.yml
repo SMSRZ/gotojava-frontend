@@ -13,6 +13,7 @@ jobs:
       AWS_REGION: ap-south-1
       S3_BUCKET_NAME: gotojava-frontend
       BUILD_DIR: build
+      
 
     steps:
       - name: Checkout repository
@@ -29,6 +30,9 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
