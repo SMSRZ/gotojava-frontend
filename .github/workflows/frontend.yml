@@ -44,8 +44,8 @@ jobs:               ##A workflow can have multiple jobs
 
       - name: Deploy to S3    ##Synchronizes local build files to S3 and removes the old files not present in the new build
         run: |                              
-          aws s3 sync $BUILD_DIR s3://$S3_BUCKET_NAME \   
-            --delete \ 
+          aws s3 sync $BUILD_DIR s3://$S3_BUCKET_NAME \
+            --delete \
             --exact-timestamps
 
       - name: Invalidate CloudFront cache     ##CloudFront caches files aggressively
