@@ -1,0 +1,25 @@
+body {
+  cursor: none !important;
+}
+
+/* Centered dot */
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #60a5fa;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Perfectly centered trailing circle */
+.cursor-circle {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(96, 165, 250, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+}

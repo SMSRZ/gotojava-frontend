@@ -1,54 +1,55 @@
-name: Frontend CI/CD
+name: Frontend CI/CD ##name that appears in the github actions 
 
 on:
   push:
-    branches:
-      - main
+    branches:       ##This defines when the pipeline runs like every time the code is pushed into main,the workflow triggers
+      - main   
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+jobs:               ##A workflow can have multiple jobs 
+  deploy:           ##Here we have one job called deploy 
+    runs-on: ubuntu-latest      ##GitHub spins up a fresh Ubuntu Linux VM for this job 
+                                ##Clean environment every run → predictable builds.
 
-    env:
+    env:            ##These are global environment variables available to every step in the job.
       AWS_REGION: ap-south-1
       S3_BUCKET_NAME: gotojava-frontend
       BUILD_DIR: build
       
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    steps:         ##Each step runs sequentially, top to bottom.
+      - name: Checkout repository     ##Downloads your GitHub repository into the runner.
+        uses: actions/checkout@v4      ##Without this, the pipeline has no code to build.
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+      - name: Setup Node.js           ##Installs Node.js on the VM.
+        uses: actions/setup-node@v4   ##Enables npm caching:
+        with:                             ##Speeds up future runs
+          node-version: 22                ##Reuses node_modules when possible
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build frontend
-        run: npm run build
-        env:
+      - name: Install dependencies    ##Why npm ci (not npm install)?
+        run: npm ci                   ##Uses package-lock.json
+                                      ##Guarantees exact dependency versions,Faster and safer for CI environments
+      - name: Build frontend          ##Runs your project’s build script
+        run: npm run build            ##Injects environment variables
+        env:                          ##Frontend env vars are: Read at Runtime,Replaced directly into JS files
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      - name: Configure AWS credentials   ##Authenticates the runner with AWS
+        uses: aws-actions/configure-aws-credentials@v4    ##Sets env vars
+        with:                                   ##Makes AWS CLI commands work
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}   ##Without this every aws command will fail with access denied
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Deploy to S3
-        run: |
-          aws s3 sync $BUILD_DIR s3://$S3_BUCKET_NAME \
-            --delete \
+      - name: Deploy to S3    ##Synchronizes local build files to S3 and removes the old files not present in the new build
+        run: |                              
+          aws s3 sync $BUILD_DIR s3://$S3_BUCKET_NAME \   
+            --delete \ 
             --exact-timestamps
 
-      - name: Invalidate CloudFront cache
-        run: |
+      - name: Invalidate CloudFront cache     ##CloudFront caches files aggressively
+        run: |                         ##Without invalidation users may see the old ui and "/*" forces cloudfront to fetch files from s3
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"

@@ -19,3 +19,18 @@ code {
 html {
   scroll-behavior: smooth;
 }
+@media (pointer: fine){
+  html,
+  body,
+  *,
+  *::before,
+  *::after,
+  button,
+  a,
+  input,
+  textarea,
+  select,
+  label {
+    cursor: none !important;
+  }
+}

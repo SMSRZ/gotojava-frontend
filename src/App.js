@@ -6,6 +6,7 @@ import AIHelper from './components/AIHelper';
 import AuthModal from './components/AuthModal';
 import UserProfile from './components/UserProfile';
 import authService from './services/authService';
+import CustomCursor from "./components/CustomCursor";
 import './App.css';
 
 function App() {
@@ -63,6 +64,7 @@ const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   return (
     <div className="App">
+      <CustomCursor />
 <AuthModal isOpen={isAuthOpen} onClose={handleAuthClose} onAuthSuccess={handleAuthSuccess} />
       <AIHelper />
       <motion.header 
